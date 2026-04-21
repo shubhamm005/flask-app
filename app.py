@@ -1,4 +1,17 @@
-html = """<!DOCTYPE html>
+from flask import Flask, Response
+
+app = Flask(__name__)
+
+# ✅ Home route
+@app.route("/")
+def home():
+    return "<h1 style='color:cyan; text-align:center;'>🔥 Flask App is LIVE 🚀</h1>"
+
+
+# ✅ Crazy 404 Error Page
+@app.errorhandler(404)
+def page_not_found(e):
+    html = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -72,8 +85,6 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  overflow: hidden;
 }
 
 .glitch::before {
@@ -104,7 +115,6 @@ body {
 h2 {
   font-size: 28px;
   margin-top: -20px;
-  color: #ffffff;
   letter-spacing: 3px;
 }
 
@@ -112,7 +122,6 @@ p {
   color: #aaa;
 }
 
-/* BUTTON */
 a {
   display: inline-block;
   margin-top: 25px;
@@ -128,8 +137,8 @@ a {
 a:hover {
   background: #00fff2;
   color: black;
-  box-shadow: 0 0 40px #00fff2;
   transform: scale(1.1);
+  box-shadow: 0 0 40px #00fff2;
 }
 
 /* FLOATING ORBS */
@@ -171,3 +180,10 @@ a:hover {
 
 </body>
 </html>"""
+
+    return Response(html, status=404, mimetype='text/html')
+
+
+# ✅ Run app
+if __name__ == "__main__":
+    app.run(debug=True)
